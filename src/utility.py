@@ -117,6 +117,49 @@ class CamPara():
             real_xyz = self.cam_center + p_dir * depth
             return real_xyz
 
+# come from hmr-src/util/image.py
+def scale_and_crop(image, scale, center, img_size):
+    image_scaled, scale_factors = resize_img(image, scale)
+    # Swap so it's [x, y]
+    scale_factors = [scale_factors[1], scale_factors[0]]
+    center_scaled = np.round(center * scale_factors).astype(np.int)
+
+    margin = int(img_size / 2)
+    image_pad = np.pad(
+        image_scaled, ((margin, ), (margin, ), (0, )), mode='edge')
+    center_pad = center_scaled + margin
+    # figure out starting point
+    start_pt = center_pad - margin
+    end_pt = center_pad + margin
+    # crop:
+    crop = image_pad[start_pt[1]:end_pt[1], start_pt[0]:end_pt[0], :]
+    proc_param = {
+        'scale': scale,
+        'start_pt': start_pt,
+        'end_pt': end_pt,
+        'img_size': img_size
+    }
+    return crop, proc_param
+
+def get_line_length(pixel_list):
+    if len(pixel_list) <= 1:
+        return 0
+    max_x, min_x = pixel_list[0][0], pixel_list[0][0]
+    max_y, min_y = pixel_list[0][1], pixel_list[0][1]
+    for i in range(len(pixel_list)):
+        if pixel_list[i][0]>max_x:
+            max_x = pixel_list[i][0]
+        elif pixel_list[i][0]<min_x:
+            min_x  = pixel_list[i][0]
+        if pixel_list[i][1]>max_y:
+            max_y = pixel_list[i][1]
+        elif pixel_list[i][1]<min_y:
+            min_y  = pixel_list[i][1]
+    l_x = max_x - min_x
+    l_y = max_y - min_y
+    length = len(pixel_list) * np.linalg.norm([l_x, l_y]) / max(l_x, l_y)
+    return length
+
 # compute the distance between anchor points and silhouette boundary, 
 # (the model occluded parts are filtered out)
 def measure_achr_dist(achr_verts, 

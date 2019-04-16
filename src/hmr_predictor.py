@@ -2,6 +2,7 @@ from __future__ import print_function
 import numpy as np
 import sys
 import tensorflow as tf
+from utility import scale_and_crop
 from utility import shift_verts
 from utility import resize_img
 
@@ -54,3 +55,44 @@ class hmr_predictor():
     
     def close(self):
         self.sess.close()
+
+# pre-processing original image to standard image for network
+def preproc_img(img, sil_bbox = False, sil = None, img_size = 224):
+    # if grey, change to rgb
+    if len(img.shape) == 2:
+        img = np.stack((img,)*3, -1)
+    # if 4-channel, change to 3-channel
+    if img.shape[2] == 4:
+        img = img[:, :, :3]
+    # get bbox of sil
+    if sil_bbox is True:
+        if sil is None:
+            print("ERROR: sil not found in preproc_img().")
+            return False
+        # compute scale according to max of bounding box size
+        bbox = get_sil_bbox(sil, margin = 15)
+        bbox_size = [bbox[1]-bbox[0], bbox[3]-bbox[2]]
+        if np.max(bbox_size) != img_size:
+            scale = (float(img_size) / np.max(bbox_size))
+        else:
+            scale = 1.
+        # compute center
+        center = np.array([bbox[1]+bbox[0], bbox[3]+bbox[2]]).astype(float)
+        center = np.round(center/2).astype(int)
+        center = center[::-1]
+        #center = center + np.array([img_size/2, img_size/2])
+    else:
+        # compute scale according to max of width and height
+        if np.max(img.shape[:2]) != img_size:
+            scale = (float(img_size) / np.max(img.shape[:2]))
+        else:
+            scale = 1.
+        # get center
+        center = np.round(np.array(img.shape[:2]) / 2).astype(int)
+        center = center[::-1]
+    # apply scale and crop
+    std_img, proc_para = scale_and_crop(img, scale, center, img_size)
+    # normalize image to [-1, 1]
+    std_img = 2 * ((std_img / 255.) - 0.5)
+    return std_img, proc_para
+
