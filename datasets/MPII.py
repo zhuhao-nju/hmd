@@ -16,7 +16,6 @@ from hmr_predictor import proc_sil
 from utility import make_trimesh
 from utility import get_joint_move
 from utility import get_achr_move
-from utility import crop_img_sil
 from utility import transform_mpii_joints
 from utility import get_anchor_posi
 from data_filter import mpii_filter
