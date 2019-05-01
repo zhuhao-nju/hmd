@@ -2,7 +2,7 @@
 
 Hao Zhu, Xinxin Zuo, Sen Wang, Xun Cao, Ruigang Yang &nbsp; &nbsp; CVPR 2019 Oral
 
-**[[project page]](http://cite.nju.edu.cn/human_shape.html)** &nbsp; &nbsp; **[[paper]](http://cite.nju.edu.cn/Haozhu/Detailed%20Human%20Shape%20Estimation%20from%20a%20Single%20Image%20by%20Hierarchical%20Mesh%20Deformation.pdf)**
+**[[Project Page]](http://cite.nju.edu.cn/human_shape.html)** &nbsp; &nbsp; **[[Arxiv]](https://arxiv.org/abs/1904.10506)**
 
 <img src="https://github.com/zhuhao-nju/hmd/blob/master/demo/results/2726.gif" width="200"> <img src="https://github.com/zhuhao-nju/hmd/blob/master/demo/results/0002.gif" width="200"> <img src="https://github.com/zhuhao-nju/hmd/blob/master/demo/results/0477.gif" width="200"> <img src="https://github.com/zhuhao-nju/hmd/blob/master/demo/results/2040.gif" width="200">
 
@@ -46,7 +46,10 @@ The results will be saved in the folder "demo/results/" by default.  Run "python
 
 This repository merely contains 4 samples for demo. To run the full test data, download the test set from [Google Drive](https://drive.google.com/open?id=1ifcvLFJb1t9uS9bz0CxqhaYUfXvQNHC4) or [Baidu Cloud](https://pan.baidu.com/s/1OVfM4ETgkFiUgmGpp0Cb4A)(extracting code:0ch3).  Extract the test set and change the "dataset_path" in "conf.ini" to the extracted location.  The range of test data number is [0-4624].  You can also follow the instructions in the "Data preparation" part to generate testing data together with training data.
 
-In the generation of the dataset, we predicted the initial mesh using [HMR](https://github.com/akanazawa/hmr) and saved it as "/para/\*.json" files.  To test on images beyond the dataset, you have to run HMR to get the initial mesh firstly.  The demo for images beyond the test set will be added in the near future.
+In the generation of the dataset, we predicted the initial mesh using [HMR](https://github.com/akanazawa/hmr) and saved it as "/para/\*.json" files.  To test on images beyond the dataset, you have to run HMR to get the initial mesh firstly.
+
+## Demo wild
+This demo is used for testing on images out of the dataset.  Please see the [demo_wild/demo_wild.md](https://github.com/zhuhao-nju/hmd/blob/master/demo_wild/demo_wild.md).
 
 ## Data preparation
 Please see the [datasets/data.md](https://github.com/zhuhao-nju/hmd/blob/master/datasets/data.md).
