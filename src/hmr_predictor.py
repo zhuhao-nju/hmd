@@ -57,7 +57,7 @@ class hmr_predictor():
         self.sess.close()
 
 # pre-processing original image to standard image for network
-def preproc_img(img, sil_bbox = False, sil = None, img_size = 224):
+def preproc_img(img, sil_bbox = False, sil = None, img_size = 224, margin = 15, normalize = False):
     # if grey, change to rgb
     if len(img.shape) == 2:
         img = np.stack((img,)*3, -1)
@@ -70,7 +70,7 @@ def preproc_img(img, sil_bbox = False, sil = None, img_size = 224):
             print("ERROR: sil not found in preproc_img().")
             return False
         # compute scale according to max of bounding box size
-        bbox = get_sil_bbox(sil, margin = 15)
+        bbox = get_sil_bbox(sil, margin = margin)
         bbox_size = [bbox[1]-bbox[0], bbox[3]-bbox[2]]
         if np.max(bbox_size) != img_size:
             scale = (float(img_size) / np.max(bbox_size))
@@ -93,6 +93,7 @@ def preproc_img(img, sil_bbox = False, sil = None, img_size = 224):
     # apply scale and crop
     std_img, proc_para = scale_and_crop(img, scale, center, img_size)
     # normalize image to [-1, 1]
-    std_img = 2 * ((std_img / 255.) - 0.5)
+    if normalize is True:
+        std_img = 2 * ((std_img / 255.) - 0.5)
     return std_img, proc_para
 
