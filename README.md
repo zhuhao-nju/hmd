@@ -49,10 +49,10 @@ This repository merely contains 4 samples for demo. To run the full test data, d
 In the generation of the dataset, we predicted the initial mesh using [HMR](https://github.com/akanazawa/hmr) and saved it as "/para/\*.json" files.  To test on images beyond the dataset, you have to run HMR to get the initial mesh firstly.
 
 ## Demo wild
-This demo is used for testing on images out of the dataset.  Please see the [demo_wild/demo_wild.md](https://github.com/zhuhao-nju/hmd/blob/master/demo_wild/demo_wild.md).
+This demo runs for images out of the dataset.  Please see [demo_wild/demo_wild.md](https://github.com/zhuhao-nju/hmd/blob/master/demo_wild/demo_wild.md).
 
 ## Data preparation
-Please see the [datasets/data.md](https://github.com/zhuhao-nju/hmd/blob/master/datasets/data.md).
+Please see [datasets/data.md](https://github.com/zhuhao-nju/hmd/blob/master/datasets/data.md).
 
 ## Citation
 If you find this project useful for your research, please consider citing:
