@@ -428,6 +428,7 @@ def get_joint_move(verts, lsp_joint, proc_para, mesh_joint, unseen_mode=False):
 
 
 def get_joint_posi(verts, 
+                   j2or3 = 2,
                    point_list = [],
                    img_size = 224,
                    K = None,
@@ -439,33 +440,30 @@ def get_joint_posi(verts,
             item_dic = pickle.load(fp)
         point_list = item_dic["point_list"]
     
-    flat_point_list = [item for sublist in point_list for item in sublist]
-    
     num_mj = len(point_list)
-    j_list = []
+    joint3d_list = []
     for i in range(num_mj):
         j_p_list = []
         for j in range(len(point_list[i])):
             j_p_list.append(verts[point_list[i][j]])
-        j_list.append(sum(j_p_list)/len(j_p_list))
-
-    new_joint_verts = []
-    ori_joint_verts = []
-    cam_para = CamPara(K = K, Rt = Rt)
-    joint_move = []
-    joint_posi = []
+        joint3d_list.append(sum(j_p_list)/len(j_p_list))
     
-    for i in range(len(j_list)):
-        src_yx = cam_para.project(j_list[i])
-        joint_posi.append(src_yx.tolist())
-    joint_posi = np.array(joint_posi)
-    joint_posi[joint_posi<0] = 0
-    joint_posi[joint_posi>(img_size-1)] = img_size-1
-    new_joint_verts = np.array(new_joint_verts)        
-    ori_joint_verts = np.array(ori_joint_verts)
+    if j2or3 == 3:
+        return joint3d_list
+    elif j2or3 == 2:
+        cam_para = CamPara(K = K, Rt = Rt)
+        joint2d_list = []
+        for i in range(len(joint3d_list)):
+            src_yx = cam_para.project(joint3d_list[i])
+            joint2d_list.append(src_yx.tolist())
+        joint2d_list = np.array(joint2d_list)
+        joint2d_list[joint2d_list<0] = 0
+        joint2d_list[joint2d_list>(img_size-1)] = img_size-1
+        return joint2d_list
+    else:
+        print("WARN: wrong j2or3 variable in get_joint_posi()")
+        return []
     
-    return joint_posi
-
 # get anchor movement
 def get_achr_move(gt_sil, verts, vert_norms, proj_sil):
     with open ('../predef/dsa_achr.pkl', 'rb') as fp:
