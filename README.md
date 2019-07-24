@@ -2,7 +2,7 @@
 
 Hao Zhu, Xinxin Zuo, Sen Wang, Xun Cao, Ruigang Yang &nbsp; &nbsp; CVPR 2019 Oral
 
-**[[Project Page]](http://cite.nju.edu.cn/human_shape.html)** &nbsp; &nbsp; **[[Arxiv]](https://arxiv.org/abs/1904.10506)**
+**[[Project Page]](http://cite.nju.edu.cn/Researches/3DCaptureandReconstruction/20190621/i5141.html)** &nbsp; &nbsp; **[[Arxiv]](https://arxiv.org/abs/1904.10506)**
 
 <img src="https://github.com/zhuhao-nju/hmd/blob/master/demo/results/2726.gif" width="200"> <img src="https://github.com/zhuhao-nju/hmd/blob/master/demo/results/0002.gif" width="200"> <img src="https://github.com/zhuhao-nju/hmd/blob/master/demo/results/0477.gif" width="200"> <img src="https://github.com/zhuhao-nju/hmd/blob/master/demo/results/2040.gif" width="200">
 
