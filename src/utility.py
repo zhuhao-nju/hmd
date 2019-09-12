@@ -428,8 +428,8 @@ def get_joint_move(verts, lsp_joint, proc_para, mesh_joint, unseen_mode=False):
 
 
 def get_joint_posi(verts, 
-                   j2or3 = 2,
                    point_list = [],
+                   j2or3 = 2,
                    img_size = 224,
                    K = None,
                    Rt = None):
