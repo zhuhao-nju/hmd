@@ -42,11 +42,11 @@ class hmr_predictor():
         self.sess = tf.Session()
         self.model = RunModel(self.config, sess=self.sess)
     
-    def predict(self, img, sil_bbox = False, sil = None):
+    def predict(self, img, sil_bbox = False, sil = None, normalize = True):
         if sil_bbox is True:
-            std_img, proc_para = preproc_img(img, True, sil)
+            std_img, proc_para = preproc_img(img, True, sil, normalize = normalize)
         else:
-            std_img, proc_para = preproc_img(img)
+            std_img, proc_para = preproc_img(img, normalize = normalize)
         std_img = np.expand_dims(std_img, 0)# Add batch dimension
         _, verts, ori_cam, _ = self.model.predict(std_img)
         shf_vert = shift_verts(proc_para, verts[0], ori_cam[0])
