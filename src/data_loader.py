@@ -247,13 +247,11 @@ class dataloader_shading(Dataset):
 #==============================================================================
 class dataloader_pred(Dataset):
     def __init__(self, 
+                 dataset_path,
                  train = True,
                  manual_seed = 1234,
                  shuffle = True,
-                 dataset_path = None,
                 ):
-        if dataset_path is None:
-            dataset_path = "/media/hao/DATA/HybridHuman/"
         if train is True:
             self.dataset_dir = dataset_path+"train/"
             self.num = 24149 #13938, non dr augment version
