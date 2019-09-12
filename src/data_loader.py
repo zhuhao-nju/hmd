@@ -7,6 +7,11 @@ import pickle
 import torchvision.transforms as transforms
 from utility import center_crop
 
+import configparser
+conf = configparser.ConfigParser()
+conf.read(u'../conf.ini', encoding='utf8')
+tgt_path = conf.get('DATA', 'tgt_path')
+
 #==============================================================================
 # data loader for joint train/test
 #==============================================================================
@@ -20,10 +25,10 @@ class dataloader_joint(Dataset):
                  get_all = False,
                 ):
         if train is True:
-            self.dataset_dir = "/media/hao/DATA/HybridHuman/train/"
+            self.dataset_dir = tgt_path + "train/"
             self.num = 24149*10 #13938, non dr augment version
         else:
-            self.dataset_dir = "/media/hao/DATA/HybridHuman/test/"
+            self.dataset_dir = tgt_path + "test/"
             self.num = 4625*10
 
         # transfer arg
@@ -110,10 +115,10 @@ class dataloader_anchor(Dataset):
                  get_all = False,
                 ):
         if train is True:
-            self.dataset_dir = "/media/hao/DATA/HybridHuman/train/"
+            self.dataset_dir = tgt_path + "train/"
             self.num = 24149*200 #13938, non dr augment version
         else:
-            self.dataset_dir = "/media/hao/DATA/HybridHuman/test/"
+            self.dataset_dir = tgt_path + "test/"
             self.num = 4625*200
 
         # transfer arg
@@ -247,11 +252,13 @@ class dataloader_shading(Dataset):
 #==============================================================================
 class dataloader_pred(Dataset):
     def __init__(self, 
-                 dataset_path,
                  train = True,
                  manual_seed = 1234,
                  shuffle = True,
+                 dataset_path = None,
                 ):
+        if dataset_path is None:
+            dataset_path = tgt_path
         if train is True:
             self.dataset_dir = dataset_path+"train/"
             self.num = 24149 #13938, non dr augment version
@@ -340,7 +347,7 @@ class dataloader_sil_pred(Dataset):
                  dataset_path = None,
                 ):
         if dataset_path is None:
-            dataset_path = "/media/hao/DATA/HybridHuman/"
+            dataset_path = tgt_path
         if train is True:
             self.dataset_dir = dataset_path + "train/"
             self.num = 24149 #13938, non dr augment version
