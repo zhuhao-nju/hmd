@@ -53,7 +53,7 @@ renderer = SMPLRenderer()
 faces = np.load("../predef/smpl_faces.npy")
 
 # hmr predict
-verts, cam, proc_para, std_img = hmr_pred.predict(std_img)
+verts, cam, proc_para, std_img = hmr_pred.predict(std_img, normalize=False)
 
 # build output folder if not exist
 if not os.path.exists(opt.outf):
