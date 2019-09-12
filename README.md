@@ -32,7 +32,7 @@ pip install --upgrade pip
 Refer to the [guide](https://pytorch.org/get-started/locally/) to install the PyTorch 1.0.
 
 ## Demo
-Download the pretrained model:
+Download the pretrained model from [Google Drive](https://drive.google.com/open?id=1ImnwfcfuTanjlHbt2t9oe5eZYP3TzDpX) or [Baidu Netdisk](https://pan.baidu.com/s/11NpU9NAiO6KOHveWo6tRAg)(extracting code:q23f), place the file in "/hmd/demo/", then extract the pretrained model:
 ```
 cd demo
 chmod +x download_pretrained_model.sh
@@ -44,15 +44,29 @@ python demo.py --ind 2 # or 477, 2040, 2726
 ```
 The results will be saved in the folder "demo/results/" by default.  Run "python demo.py -h" for more usages.
 
-This repository merely contains 4 samples for demo. To run the full test data, download the test set from [Google Drive](https://drive.google.com/open?id=1ifcvLFJb1t9uS9bz0CxqhaYUfXvQNHC4) or [Baidu Cloud](https://pan.baidu.com/s/1OVfM4ETgkFiUgmGpp0Cb4A)(extracting code:0ch3).  Extract the test set and change the "dataset_path" in "conf.ini" to the extracted location.  The range of test data number is [0-4624].  You can also follow the instructions in the "Data preparation" part to generate testing data together with training data.
+This repository merely contains 4 samples for demo. To run the full test data, download the test set from [Google Drive](https://drive.google.com/open?id=1ifcvLFJb1t9uS9bz0CxqhaYUfXvQNHC4) or [Baidu Netdisk](https://pan.baidu.com/s/1OVfM4ETgkFiUgmGpp0Cb4A)(extracting code:0ch3).  Extract the test set and change the "dataset_path" in "conf.ini" to the extracted location.  The range of test data number is [0-4624].  You can also follow the instructions in the "Data preparation" part to generate testing data together with training data.
 
 In the generation of the dataset, we predicted the initial mesh using [HMR](https://github.com/akanazawa/hmr) and saved it as "/para/\*.json" files.  To test on images beyond the dataset, you have to run HMR to get the initial mesh firstly.
 
 ## Demo wild
-This demo runs for images out of the dataset.  Please see [demo_wild/demo_wild.md](https://github.com/zhuhao-nju/hmd/blob/master/demo_wild/demo_wild.md).
+This demo runs for images out of the dataset.  Please see [demo_wild/demo_wild.md](/demo_wild/demo_wild.md).
 
 ## Data preparation
-Please see [datasets/data.md](https://github.com/zhuhao-nju/hmd/blob/master/datasets/data.md).
+Please see [datasets/data.md](/datasets/data.md) for detail.
+
+## Training
+After data preparation, run the traning of anchor_net and joint_net:
+```
+conda activate py27-hmd
+python ./src/train_joint.py
+python ./src/train_anchor.py
+```
+If the training data location changed, the "tgt_path" in "/conf.ini" should be changed accordingly.
+
+TODO - Training of shading_net.
+
+## Evaluation
+Please see [eval/eval.md](/eval/eval.md) for detail.
 
 ## Citation
 If you find this project useful for your research, please consider citing:
