@@ -58,8 +58,9 @@ Please see [datasets/data.md](/datasets/data.md) for detail.
 After data preparation, run the traning of anchor_net and joint_net:
 ```
 conda activate py27-hmd
-python ./src/train_joint.py
-python ./src/train_anchor.py
+cd src
+python ./train_joint.py
+python ./train_anchor.py
 ```
 If the training data location changed, the "tgt_path" in "/conf.ini" should be changed accordingly.
 
