@@ -24,8 +24,11 @@ pip install -r requirements.txt
 
 The installation of OpenDR is unstable now, we recommend using a old stable version:
 ```
+sudo apt-get install python-dev python-pip cython python-numpy \
+    python-scipy python-matplotlib libopencv-dev python-opencv \
+    libosmesa6-dev freeglut3-dev
 pip install pip==8.1.1
-pip install opendr==0.76
+pip install opendr==0.78
 pip install --upgrade pip
 ```
 
