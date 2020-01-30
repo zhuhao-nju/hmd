@@ -6,6 +6,7 @@ import skimage.draw
 import matplotlib.pyplot as plt
 import pickle
 import torch.nn.functional as F
+import torch
 # lighting functions
 import lighting
 
