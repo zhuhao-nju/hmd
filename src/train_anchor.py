@@ -55,7 +55,7 @@ parser.add_argument('--prvInterval', type = int, default = 1,
 parser.add_argument('--shlInterval', type = int, default = 1, 
                     help = 'show loss interval')
 parser.add_argument('--saveModelIter', type = int, default = 20000, 
-                    help = 'show loss interval')
+                    help = 'save model interval')
 opt = parser.parse_args()
 print(opt)
 
