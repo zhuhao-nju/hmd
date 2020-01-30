@@ -13,7 +13,6 @@ def depthToNormal(depthmap,
                   thres,
                   img_size
                  ):
-    
     # default
     K_torch = torch.tensor([K[0], K[1], K[2], K[3]]).to(device)
 
@@ -153,25 +152,6 @@ def RGBDalbedoToLight(colorImg,
     return lighting_est
 
 
-#for batch depthmap NCHW [Alpha version]
-def depthToNormalBatchAlpha(depthmap,
-                        device,
-                        img_size =[448, 448],
-                        thres = 30):
-    
-    # predifne a NCHW matrix store normal 
-    N,C,H,W = depthmap.size()
-    normals = torch.zeros([N,3,H,W]).to(device)
-    
-    for i in range(depthmap.shape[0]):
-        normal = depthToNormal( depthmap[i,:,:,:], device, img_size, thres)
-        
-        normals[i,:,:,:], _ = normal # (B, C, H ,W)
-        
-    return normals
-
-
-
 #for Batch depth to Normal [stable]
 def depthToNormalBatch(depthmap,
                   device,
@@ -273,35 +253,3 @@ def normalToSHBatch(normal,
     spherical_harmonics[:,:,:,8] = (3 * normal[:,2,:,:] * normal[:,2,:,:] - 1) *c[8];
     
     return spherical_harmonics
-
-
-
-#for single depth [Alpha version]
-def DepthToNormalAlpha(depthmap,
-                  img_size =[448, 448],
-                  thres = 0.015):
-    
-    #   assert( depthmap ==   img_size.shape([0] *img_size.shape[1]  )
-    depthmap = torch.reshape(depthmap, img_size) #direct resize toimagesize
-    
-    #  0 0 T 0
-    #  0 L C R
-    #  0 0 B 0
-    #  cross(B-C, R-C)
-    HWC =torch.cat([img_size, torch.tensor([3])])
-    normal = torch.zeros(HWC)
-    
-    for i in range(depthmap.shape[0]):
-        for j in range(depthmap.shape[1]):
-            R =[i,  j+1, depthmap[i,   j+1]]
-            R =[i+1,  j, depthmap[i+1, j]]
-            C =[i,    j, depthmap[i,   j]]
-            
-            if (depthmap[i, j] ==0 or depthmap[i, j+1] ==0 or depthmap[i+1, j] ==0 \
-               or abs( depthmap[i, j] - depthmap[i+1, j] ) > thres \
-               or abs( depthmap[i, j] - depthmap[i, j+1] ) > thres ):
-                continue
-            
-            normal[i,j,:] = torch.cross(B-C, R-C)
-        
-    return normal
