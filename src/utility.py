@@ -5,6 +5,9 @@ import math
 import skimage.draw
 import matplotlib.pyplot as plt
 import pickle
+import torch.nn.functional as F
+# lighting functions
+import lighting
 
 # show image in Jupyter Notebook (work inside loop)
 from io import BytesIO 
@@ -116,6 +119,31 @@ class CamPara():
         else:
             real_xyz = self.cam_center + p_dir * depth
             return real_xyz
+        
+# for photometric loss       
+def photometricLossgray(colorImg_gray, depthImg, albedoImg_gray, 
+                        mask, lighting_est, device, K, thres):
+    
+    N,H,W = colorImg_gray.size()
+    
+    # color loss
+    normals, _ = lighting.depthToNormalBatch(depthImg, device, K, thres)
+    SHs     = lighting.normalToSHBatch(normals,device)
+    
+    SHs    = torch.reshape(SHs, (N, H*W, 9))
+    lighting_est = torch.reshape(lighting_est, (N, 9, 1))
+    
+    #SHs to [B, H*W,9] lighting [B, 9, 1] --[N, H*W] --[B,H,W,1]             
+    color_shading = torch.bmm(SHs, lighting_est) # N H*W 1   
+    color_shading = torch.reshape(color_shading, (N, H, W))
+    
+    mask1 = torch.reshape(mask[:,0,:,:], (N,H,W)) # one layer mask
+    color_pre  = mask1 * (color_shading * albedoImg_gray) # N*H*W
+    colorImg_gray_mask = mask1 * colorImg_gray # mask
+    
+    colorloss = F.l1_loss(color_pre, colorImg_gray_mask) # NHW size directly
+        
+    return colorloss, color_pre
 
 # come from hmr-src/util/image.py
 def scale_and_crop(image, scale, center, img_size):
