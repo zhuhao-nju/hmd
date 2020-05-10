@@ -196,7 +196,7 @@ class dataloader_anchor(Dataset):
 #==============================================================================
 # data loader for shading training/testing
 #==============================================================================    
-class dataloader_shading(Dataset):
+class dataloader_shading_orig(Dataset):
     def __init__(self, 
                  train = True,
                  manual_seed = 1234,
@@ -246,7 +246,105 @@ class dataloader_shading(Dataset):
         mask[depth_diff!=0] = 1
         
         return (src_img, depth_diff, mask)
-                
+
+    
+#==============================================================================
+# data loader for shading training/testing with pre-computed light-shading
+#==============================================================================     
+class dataloader_shading(Dataset):
+    def __init__(self,
+                 manual_seed=1234,
+                 transform=None,
+                 shuffle=True,
+                 use_color=False,
+                 light_csv_file="light_est_shading.csv",
+                 ):
+
+        self.dataset_dir = "./data1006/"
+        self.num = 2271
+
+        # make random seed
+        if manual_seed is None:
+            manual_seed = random.randint(1, 10000)
+        random.seed(manual_seed)
+
+        # make data_id list and shuffle
+        self.id_list = list(range(self.num))
+        if shuffle is True:
+            random.shuffle(self.id_list)
+
+        self.transform = transform
+        self.use_color = use_color
+        if self.use_color:
+            self.light_file = pd.read_csv(light_csv_file)
+            self.light_csv_file = True
+
+    def __len__(self):
+        return self.num
+
+    def __getitem__(self, index):
+        tuple_id = self.id_list[index]
+
+        # get source image and its gray image
+        src_img = PIL.Image.open(self.dataset_dir +
+                                          "inputC_%04d.jpg" % tuple_id)
+        src_img_gray = src_img.convert('L')
+
+        src_img = np.array(src_img) / 255.0
+        src_img_gray = np.array(src_img_gray) / 255.0
+
+        # get gt depth
+        f_dgt = open(self.dataset_dir + 'gtD_%04d.bin' % tuple_id, "rb")
+        depth_gt = np.resize(np.fromfile(f_dgt, dtype=np.float32),
+                             (448, 448)).transpose()
+        depth_gt = np.expand_dims(depth_gt, 0)
+        depth_gt = torch.from_numpy(depth_gt)
+
+        # get smooth depth
+        f_dsm = open(self.dataset_dir + 'smoothD_%04d.bin' % tuple_id, "rb")
+        depth_sm = np.resize(np.fromfile(f_dsm, dtype=np.float32),
+                             (448, 448)).transpose()
+        depth_sm = np.expand_dims(depth_sm, 0)
+        depth_sm = torch.from_numpy(depth_sm)
+
+        # compute depth difference
+        depth_diff = depth_gt - depth_sm
+        depth_diff = depth_diff * 10
+
+        # get mask
+        mask = np.zeros(depth_diff.shape)
+        mask[depth_diff != 0] = 1
+        mask = torch.from_numpy(mask)
+
+        if self.use_color:
+            # get the albedo image and its gray image
+            alebedo_img = PIL.Image.open(self.dataset_dir +
+                                         "inputC_%04d-r.png" % tuple_id)
+            alebedo_img_gray = alebedo_img.convert('L')
+
+            alebedo_img = np.array(alebedo_img) / 255.0
+            alebedo_img_gray = np.array(alebedo_img_gray) / 255.0
+
+            if self.light_csv_file:
+                light_est = self.light_file.iloc[index, :]
+                light_est = torch.from_numpy(np.asarray(light_est))
+            else:
+                light_est = torch.from_numpy(np.zeros([1, 9]))
+
+        if self.transform != None:
+            src_img = self.transform(src_img)
+            src_img_gray = self.transform(src_img_gray)
+
+            if self.use_color:
+                alebedo_img = self.transform(alebedo_img)
+                alebedo_img_gray = self.transform(alebedo_img_gray)
+
+        if self.use_color:
+            return src_img, mask, depth_gt, depth_sm, depth_diff, src_img_gray, alebedo_img, alebedo_img_gray, light_est
+        else:
+            return src_img, mask, depth_gt, depth_sm, depth_diff
+
+
 #==============================================================================
 # data loader for efficient predicting test
 #==============================================================================
