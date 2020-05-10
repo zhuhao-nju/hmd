@@ -125,7 +125,7 @@ class CamPara():
 def photometricLossgray(colorImg_gray, depthImg, albedoImg_gray, 
                         mask, lighting_est, device, K, thres):
     
-    N,H,W = colorImg_gray.size()
+    N,C,H,W = colorImg_gray.size()
     
     # color loss
     normals, _ = lighting.depthToNormalBatch(depthImg, device, K, thres)
