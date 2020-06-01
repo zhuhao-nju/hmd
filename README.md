@@ -64,10 +64,9 @@ conda activate py27-hmd
 cd src
 python ./train_joint.py
 python ./train_anchor.py
+python ./train_shading.py
 ```
 If the training data location changed, the "tgt_path" in "/conf.ini" should be changed accordingly.
-
-TODO - Training of shading_net.
 
 ## Evaluation
 Please see [eval/eval.md](/eval/eval.md) for detail.
