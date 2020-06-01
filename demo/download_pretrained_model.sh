@@ -1,6 +1,6 @@
 if [ -f "pretrained_model.tar.gz" ]; then
     echo "Model downloaded."
 else
-    wget http://cite.nju.edu.cn/Haozhu/hmd_pretrained_model.tar.gz -O pretrained_model.tar.gz
+    echo "Currently wget link cannot be used, please download the model from google drive or baidu disk as shown in README.md (demo part), then extract the model to this folder."
 fi
 tar -zxvf pretrained_model.tar.gz
