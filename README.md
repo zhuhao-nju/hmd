@@ -35,7 +35,7 @@ pip install --upgrade pip
 Refer to the [guide](https://pytorch.org/get-started/locally/) to install the PyTorch 1.0.
 
 ## Demo
-Download the pretrained model from [Google Drive](https://drive.google.com/open?id=1ImnwfcfuTanjlHbt2t9oe5eZYP3TzDpX) or [Baidu Netdisk](https://pan.baidu.com/s/11NpU9NAiO6KOHveWo6tRAg)(extracting code:q23f), place the file in "/hmd/demo/", then extract the pretrained model:
+Download the pretrained model from [Google Drive](https://drive.google.com/file/d/1LaQBoJPvrqAkF2AGzeV97lmMu9OhsGAS/view?usp=sharing) or [Baidu Netdisk](https://pan.baidu.com/s/11NpU9NAiO6KOHveWo6tRAg)(extracting code:q23f), place the file in "/hmd/demo/", then extract the pretrained model:
 ```
 cd demo
 chmod +x download_pretrained_model.sh
