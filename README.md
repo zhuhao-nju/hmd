@@ -1,6 +1,6 @@
 # Detailed Human Shape Estimation from a Single Image by Hierarchical Mesh Deformation
 
-[Hao Zhu](https://zhuhao-nju.github.io/), [Xinxin Zuo](https://sites.google.com/site/xinxinzuohome/), [Sen Wang](https://sites.google.com/site/senwang1312home/), [Xun Cao](https://cite.nju.edu.cn/People/Faculty/20190621/i5054.html), Ruigang Yang &nbsp; &nbsp; CVPR 2019 Oral
+[Hao Zhu](https://zhuhao-nju.github.io/), [Xinxin Zuo](https://sites.google.com/site/xinxinzuohome/), [Sen Wang](https://sites.google.com/site/senwang1312home/), [Xun Cao](https://cite.nju.edu.cn/People/Faculty/20190621/i5054.html), [Ruigang Yang](https://orcid.org/0000-0001-5296-6307) &nbsp; &nbsp; CVPR 2019 Oral
 
 **[[Project Page]](http://cite.nju.edu.cn/Researches/3DCaptureandReconstruction/20190621/i5141.html)** &nbsp; &nbsp; **[[Arxiv]](https://arxiv.org/abs/1904.10506)**
 
