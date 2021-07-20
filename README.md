@@ -77,7 +77,8 @@ If you find this project useful for your research, please consider citing:
 @inproceedings{zhu2019detailed,
   title={Detailed human shape estimation from a single image by hierarchical mesh deformation},
   author={Zhu, Hao and Zuo, Xinxin and Wang, Sen and Cao, Xun and Yang, Ruigang},
-  booktitle={Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition (CVPR)},
+  booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)},
+  pages={4491--4500},
   year={2019}
 }
 ```
