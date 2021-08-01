@@ -74,6 +74,15 @@ Please see [eval/eval.md](/eval/eval.md) for detail.
 ## Citation
 If you find this project useful for your research, please consider citing:
 ```
+@article{zhu2021detailed,
+  title={Detailed Avatar Recovery from Single Image},
+  author={Zhu, Hao and Zuo, Xinxin and Yang,Haotian and Wang, Sen and Cao, Xun and Yang, Ruigang},
+  booktitle={IEEE Transactions on Pattern Analysis and Machine Intelligence},
+  year={2021}
+}
+```
+
+```
 @inproceedings{zhu2019detailed,
   title={Detailed human shape estimation from a single image by hierarchical mesh deformation},
   author={Zhu, Hao and Zuo, Xinxin and Wang, Sen and Cao, Xun and Yang, Ruigang},
