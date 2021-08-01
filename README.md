@@ -77,7 +77,7 @@ If you find this project useful for your research, please consider citing:
 @article{zhu2021detailed,
   title={Detailed Avatar Recovery from Single Image},
   author={Zhu, Hao and Zuo, Xinxin and Yang,Haotian and Wang, Sen and Cao, Xun and Yang, Ruigang},
-  booktitle={IEEE Transactions on Pattern Analysis and Machine Intelligence},
+  booktitle={IEEE Transactions on Pattern Analysis and Machine Intelligence (TPAMI)},
   year={2021}
 }
 ```
