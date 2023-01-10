@@ -74,11 +74,14 @@ Please see [eval/eval.md](/eval/eval.md) for detail.
 ## Citation
 If you find this project useful for your research, please consider citing:
 ```
-@article{zhu2021detailed,
+@article{zhu2022detailed,
   title={Detailed Avatar Recovery from Single Image},
   author={Zhu, Hao and Zuo, Xinxin and Yang,Haotian and Wang, Sen and Cao, Xun and Yang, Ruigang},
-  booktitle={IEEE Transactions on Pattern Analysis and Machine Intelligence (TPAMI)},
-  year={2021}
+  booktitle={IEEE Transactions on Pattern Analysis and Machine Intelligence},
+  volume={44},
+  number={11},
+  pages={7363--7379},
+  year={2022},
 }
 ```
 
